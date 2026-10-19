@@ -1,0 +1,14 @@
+# Local research PDFs and saved blog posts (untracked to avoid bloating the repository)
+papers/*.pdf
+papers/**/*.pdf
+papers/*.html
+papers/**/*.html
+!papers/README.md
+
+# OS & Editor artifacts
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
