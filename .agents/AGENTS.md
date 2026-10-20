@@ -26,6 +26,9 @@ Agents operating in this repository act as **Research & Data Repository Managers
 
 ### B. Scientific & Architectural Documentation
 * Author, refine, and maintain technical specifications in `docs/` (e.g., [`docs/MODELS.md`](file:///home/khemi/workspace/kv_co-op_hub/docs/MODELS.md), architecture diagrams, literature review notes).
+* **Literature Reviews (`docs/literature_survey/`):**
+  * Use the workspace [`literature-review`](file:///home/khemi/workspace/kv_co-op_hub/.agents/skills/literature-review/SKILL.md) skill (`.agents/skills/literature-review/SKILL.md`) when ingesting research papers across Tier 1 (`foundations/`), Tier 2 (`techniques/`), and Tier 3 (`benchmarks/`).
+  * Check [`papers/`](file:///home/khemi/workspace/kv_co-op_hub/papers/) first for local, gitignored PDFs before falling back to arXiv/web and official GitHub repositories.
 * Enforce project scope boundaries:
   * Strict adherence to consumer hardware budgets (16 GB cluster VRAM cap, 8 GB local VRAM cap).
   * Unmodified model weights in FP16/BF16 (no weight quantization; focus is strictly on KV-cache management).
