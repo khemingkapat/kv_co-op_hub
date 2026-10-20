@@ -142,6 +142,16 @@ Save to: `docs/literature_survey/foundations/<topic_or_system>.md`
   - (Any key formulas—like the KV cache byte size equation—with every term explained in plain words)
 - **Verification of Team Notes (`manual_reviews.md`):**
   - (Confirm and expand on what our manual notes captured)
+
+---
+
+## 2. System & Architectural Analysis
+- **Core Contribution:**
+  - (Summary of the foundational system, empirical findings, or numerical proof)
+- **Architectural Bottlenecks / Failure Modes Addressed:**
+  - (Key bottlenecks, numerical properties, or system behaviors exposed)
+- **Relevance to `kv_bench` Baseline Work Packages (`WP-1`, `WP-2`, `WP-6`):**
+  - (How this shapes our profiling harness, metric interpretation, or baseline evaluation)
 ```
 
 ---
@@ -163,9 +173,21 @@ Save to: `docs/literature_survey/benchmarks/<benchmark_name>.md`
   - (e.g., what happens if our eviction drops an early turn, or if compression blurs timestamps?)
 - **Key Findings from the Paper Worth Knowing:**
   - (2–3 interesting findings from the benchmark paper itself—e.g., why long-context models still drop 30–60% accuracy, or why round-level chunking beats session-level)
-- **Dataset Size, Cost & Our Project Role ([`docs/proposal.md`](../../proposal.md) Section 3.3):**
-  - **Role:** [Final Report Metric | Reproduction-Only Check | Diagnostic Metric]
-  - **How We Run It on 8–16 GB GPUs:** (Context lengths, subset strategy, and scoring method)
 - **Verification of Team Notes (`manual_reviews.md`):**
   - (Confirm and refine what our manual notes captured against the PDF)
+
+---
+
+## 2. Workload & Diagnostic Profile
+- **Publication & Authors:**
+- **Target Workload & Context Lengths:**
+- **Core Capabilities / Task Categories Tested:**
+- **Evaluation Methodology:**
+
+---
+
+## 3. Role in Senior Project ([`docs/proposal.md`](../../proposal.md) Section 3.3.2)
+- **Role:** [Final Report Metric | Reproduction-Only Check | Diagnostic Metric]
+- **Execution Strategy on 8–16 GB GPUs:** (Context lengths, subset strategy, and scoring method)
 ```
+
