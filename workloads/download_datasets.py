@@ -15,7 +15,6 @@ import datetime
 import hashlib
 import json
 import os
-import sys
 import urllib.request
 from typing import Any
 
@@ -325,11 +324,22 @@ def write_manifest(
     pg19_entries: list[dict[str, Any]],
     is_mock: bool = False,
 ) -> None:
-    """Write the dataset provenance manifest."""
+    """Write the dataset provenance manifest, preserving existing entries when updating a subset."""
     os.makedirs(os.path.dirname(manifest_path), exist_ok=True)
+    if os.path.exists(manifest_path):
+        try:
+            with open(manifest_path, "r", encoding="utf-8") as f:
+                existing = json.load(f)
+            if not longmemeval_entry:
+                longmemeval_entry = existing.get("datasets", {}).get("longmemeval", {}).get("file", {})
+            if not pg19_entries:
+                pg19_entries = existing.get("datasets", {}).get("pg19", {}).get("files", [])
+        except (OSError, json.JSONDecodeError):
+            pass
+
     manifest = {
         "manifest_version": "1.0",
-        "generated_at": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "generated_at": datetime.datetime.now(datetime.UTC).isoformat(),
         "is_dry_run": is_mock,
         "datasets": {
             "longmemeval": {

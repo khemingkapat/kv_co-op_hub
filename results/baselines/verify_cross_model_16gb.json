@@ -1,0 +1,36 @@
+{
+  "model": "qwen3-1.7b",
+  "technique": "baseline",
+  "axes": [],
+  "results": [
+    {
+      "requested_ctx": 128,
+      "status": "SUCCESS",
+      "axes": [],
+      "prompt_tokens": 128,
+      "generated_tokens": 16,
+      "ttft_sec": 0.0386,
+      "decode_time_sec": 0.1828,
+      "total_time_sec": 0.2214,
+      "throughput_tok_per_sec": 82.06,
+      "tpot_mean_ms": 12.19,
+      "tpot_p95_ms": 12.19,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 0.0386,
+      "peak_alloc_mb": 13644.21,
+      "peak_reserved_mb": 13732.0,
+      "host_rss_delta_mb": 1506.55,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52,
+        "top1_agreement": 0.0,
+        "kl_div_mean": 13.58626,
+        "kl_div_p99": 15.3239
+      }
+    }
+  ]
+}
