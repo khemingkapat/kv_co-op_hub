@@ -134,37 +134,47 @@ When the Pull Request is merged:
 
 Because experiments will run on different machines (local RTX 4060 vs. CPE Slurm cluster RTX 4090 capped at 16GB), **results must never be left uncommitted on temporary scratch drives**.
 
-### 4.1 Provenance Manifest Structure
-Every benchmark sweep output saved to `kv_co-op_hub/results/` must record its exact provenance:
+### 4.1 Provenance Manifest Structure (Validated by Hub CI)
+Every benchmark sweep output saved to `kv_co-op_hub/results/` must include a companion `results/manifests/run_manifest_<name>.json` recording its exact provenance and SHA256 hashes (automatically verified on every PR by [`.github/workflows/hub-ci.yml`](../.github/workflows/hub-ci.yml)):
 ```json
 {
-  "run_id": "20261015_rtx4060_baseline_vllm",
-  "timestamp": "2026-10-15T10:30:00Z",
-  "hardware": {
-    "gpu": "NVIDIA GeForce RTX 4060 8GB",
-    "host_ram_gb": 16,
-    "pcie": "PCIe 4.0 x8",
-    "driver_version": "535.183.01",
-    "cuda_version": "12.2"
+  "manifest_version": "1.0",
+  "generated_at": "2026-10-25T06:06:57Z",
+  "provenance_type": "baseline_run_manifest",
+  "milestone": "WP-2",
+  "work_package": "WP2-4",
+  "target_workload": "Uncompressed BF16 Native vLLM Reference Baseline (PG-19 Continuous Prefix & LongMemEval)",
+  "execution_environment": {
+    "cluster_node": "gpu01.slurm.cpe.kmutt.ac.th",
+    "slurm_job_id": "22868",
+    "gpu_model": "NVIDIA GeForce RTX 4090",
+    "physical_vram_gib": 23.52,
+    "process_allocator_cap_gib": 16.0,
+    "cuda_version": "13.0",
+    "nvidia_driver": "580.178.04",
+    "vllm_version": "0.30.0"
   },
-  "repositories": {
-    "kv_bench_commit": "a1b2c3d...",
-    "engine_commit": "e4f5g6h..."
+  "source_repository": {
+    "repo": "khemingkapat/kv_bench",
+    "commit_sha": "3aee66fe5dff31afe6d84a196cf963888837ebc8",
+    "clean_working_tree": true
   },
-  "command": "uv run main.py --technique baseline --contexts 512 1024 2048 4096 --max-vram-gb 8.0",
-  "metrics_summary": {
-    "peak_vram_mb": 7650,
-    "oom_threshold_ctx": 4096,
-    "ttft_p95_sec": 1.42,
-    "tpot_mean_ms": 19.8
+  "golden_artifacts": {
+    "baseline_hardware_16gb": {
+      "path": "results/baselines/baseline_hardware_16gb.json",
+      "sha256": "2dad816ae9b63ce69457bd884faadb486883e4a1b71532ed82749c12c4b606dd",
+      "description": "Single-stream context sweep (512 to 32,768 exact PG-19 tokens) and OOM cliff records"
+    }
   }
 }
 ```
 
-### 4.2 Storage Locations in `kv_co-op_hub`
-* `results/baselines/`: Golden reference numbers for standard vLLM, FlexGen, StreamingLLM.
-* `results/runs/<milestone>/`: Batch experiment outputs from sweeps.
-* `analysis/figures/`: Publication-ready SVG/PDF charts produced by Jupyter notebooks in `analysis/notebooks/`.
+### 4.2 Storage Locations & Guardrails in `kv_co-op_hub`
+* `results/baselines/`: Golden reference numbers (`baseline_hardware_16gb.json`, `concurrent_baseline_16gb.json`, `longmem_baseline_16gb.json`).
+* `results/baselines/references/`: Golden per-step token logprob references (`*_ref.json`). **Restricted strictly to baselines**; experimental runs in `results/runs/` must store only computed summary metrics (`top1_agreement`, `kl_div_mean`, `kl_div_p99`).
+* `results/runs/<milestone>/`: Consolidated candidate evaluation outputs by milestone.
+* `analysis/figures/`: Publication-ready PNG/SVG charts.
+* For full contributor rules and local CI verification commands, see [`CONTRIBUTING.md`](../CONTRIBUTING.md).
 
 ---
 
