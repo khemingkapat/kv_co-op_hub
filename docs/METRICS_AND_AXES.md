@@ -53,43 +53,48 @@ Therefore, **the `STRUCTURAL` axis uniquely introduces an accuracy vs. efficienc
 
 ### Evaluation Strategies for Structural Techniques
 
-To rigorously evaluate structural techniques without introducing prohibitive evaluation overhead, we adopt three tiers of quality metrics:
+To rigorously evaluate structural techniques without prohibitive evaluation overhead, the project **focuses primarily and exclusively on two core quality pillars**:
 
 ```mermaid
 flowchart TD
-    subgraph Tier1["Tier 1: Fast Logit Divergence"]
-        A["Exact Logit Comparison<br>(Zero extra dataset overhead)"] --> D["KL-Divergence & Cosine Similarity"]
+    subgraph PrimaryPillars["Primary Production Quality Pillars (Required)"]
+        Pillar1["<b>Pillar 1: Micro Logit Divergence</b><br/>• Top-1 Token Agreement (%)<br/>• Mean & P99 KL-Divergence<br/>• Direct logit verification vs. FP16"]
+        Pillar2["<b>Pillar 2: Macro Long-Context Adherence</b><br/>• <b>LongMemEval</b> (5 Core Capabilities)<br/>• Fact Recall & Information Update<br/>• Multi-turn chat reasoning up to 32K"]
     end
-    subgraph Tier2["Tier 2: Language Modeling Quality"]
-        B["Long-Text Perplexity<br>(WikiText-2 / PG-19)"] --> E["Δ Perplexity = PPL_opt - PPL_base"]
+
+    subgraph Supplementary["Supplementary Diagnostic (Optional)"]
+        Supp["<b>Token-Level Perplexity (ΔPPL)</b><br/>• WikiText-2 / PG-19<br/>• <i>Deprioritized as primary gate due to<br/>averaging effects masking fact loss</i>"]
     end
-    subgraph Tier3["Tier 3: Long-Context Recall"]
-        C["Needle In A Haystack (NIAH) / Retrieval"] --> F["Context Depth Retrieval Accuracy (%)"]
-    end
+
+    Pillar1 -.-> PrimaryPillars
+    Pillar2 -.-> PrimaryPillars
 ```
 
-#### 1. Tier 1: Logit Divergence (Fast Sanity Check)
-* **Goal:** Immediate detection of precision collapse or numerical instability during standard test sweeps.
-* **Method:** Run identical prompts through the baseline (uncompressed FP16) and the structural technique. Compare output logit distributions over the first $N$ decoded tokens:
-  $$\text{CosineSimilarity}(L_{\text{baseline}}, L_{\text{structural}})$$
-  $$\text{KL}(P_{\text{baseline}} \parallel P_{\text{structural}})$$
-* **Advantage:** Requires no external benchmark datasets; computed directly within [`Technique.extra_metrics()`](https://github.com/khemingkapat/kv_bench/blob/main/src/core/technique.py).
+#### 1. Primary Pillar 1: Logit Divergence & Numerical Agreement (Micro-Level Fidelity)
+* **Goal:** Immediate, dataset-free verification of numerical precision stability during standard test sweeps.
+* **Method:** Run identical prompts through uncompressed BF16 baseline and the structural technique. Compare output logit distributions over generated steps:
+  $$\text{Top-1 Token Agreement} = \frac{1}{T} \sum_{t=1}^T \mathbb{I}(\arg\max L_{\text{structural}}^{(t)} == \arg\max L_{\text{baseline}}^{(t)})$$
+  $$\text{KL}(P_{\text{baseline}} \parallel P_{\text{structural}}) = \sum_{v \in \mathcal{V}} P_{\text{baseline}}(v) \log \frac{P_{\text{baseline}}(v)}{P_{\text{structural}}(v)}$$
+* **Metrics:** `extra["top1_agreement"]`, `extra["kl_div_mean"]`, `extra["kl_div_p99"]`.
+* **Advantage:** Requires zero external dataset ingestion; executed directly against golden reference logits (`results/baselines/references/baseline_qwen3-4b_ref.json`).
 
-#### 2. Tier 2: Token-Level Perplexity ($\Delta \text{PPL}$)
-* **Goal:** Measure general autoregressive language modeling fidelity across extended context lengths.
-* **Method:** Measure sliding-window negative log-likelihood on a standardized long-text benchmark (e.g., WikiText-2, PG-19, or synthetic long text).
-* **Metric:**
-  $$\Delta \text{PPL} = \text{PPL}_{\text{structural}} - \text{PPL}_{\text{baseline}}$$
-* **Thresholds:**
-  - $\Delta \text{PPL} < 0.1$: Imperceptible degradation (acceptable for production FP8/INT8).
-  - $0.1 \le \Delta \text{PPL} \le 0.5$: Minor loss (acceptable for constrained consumer GPUs).
-  - $\Delta \text{PPL} > 0.5$: Significant degradation; requires adjusting eviction ratio or quantization scale.
+#### 2. Primary Pillar 2: Long-Term Memory Adherence via LongMemEval (Macro-Level Retention)
+* **Goal:** Directly measure whether token eviction, windowing, or low-bit quantization causes long-range amnesia, hallucination, or catastrophic fact loss in realistic multi-session user chats.
+* **Method:** Evaluate 50 curated multi-turn conversational histories scaled from 512 to 32K context across 5 distinct memory capabilities:
+  1. **Fact Recall:** Retrieving specific details across past chat sessions.
+  2. **Information Update:** Overwriting outdated memory with newer corrections.
+  3. **Relative Timeframe:** Chronological reasoning across temporal markers.
+  4. **Cross-Session Reasoning:** Synthesizing facts dispersed across sessions.
+  5. **Unanswerable Refusal:** Refusing to answer when facts were never provided.
+* **Metrics:** `extra["longmem_acc_overall"]`, `extra["longmem_macro_f1"]`, and per-task accuracies (`extra["longmem_acc_<task>"]`).
+* **Advantage:** Unlike synthetic Needle-In-A-Haystack (NIAH), LongMemEval measures nuanced linguistic comprehension and conversational memory adherence under real SME assistant dialogue patterns.
 
-#### 3. Tier 3: Long-Context Retrieval / Needle In A Haystack (NIAH)
-* **Goal:** Detect context blindness caused by token eviction policies (e.g., H2O, StreamingLLM).
-* **Method:** Insert specific factual key-value pairs ("needles") at variable depths (0%, 25%, 50%, 75%, 100%) within long filler text ("haystack").
-* **Metric:** Retrieval accuracy (%) across prompt lengths and depth bins.
-* **Rationale:** Token eviction policies can maintain low overall perplexity on repetitive text while accidentally discarding critical, sparsely attended facts. NIAH directly exposes this failure mode.
+#### 3. Supplementary Diagnostic: Token-Level Perplexity ($\Delta \text{PPL}$)
+* **Status:** **Deprioritized as a primary evaluation gate.** Retained strictly as an optional diagnostic for autoregressive language modeling continuity on continuous text (PG-19 / WikiText-2).
+* **Why Perplexity is Not a Primary Quality Gate:**
+  * As established in modern KV-cache literature (e.g., *The Illusion of Equivalence*, *LoCoMo*), token perplexity computes an unweighted average of negative log-likelihood over thousands of common filler tokens.
+  * Consequently, aggressive token eviction or coarse quantization schemes can easily achieve an apparently harmless $\Delta \text{PPL} < 0.2$ while completely evicting sparse needle tokens—leading to silent catastrophic failure in factual retrieval.
+  * Therefore, while $\Delta \text{PPL}$ can confirm general syntactic fluency, **LongMemEval and Logit Divergence serve as the definitive arbiters of structural quality.**
 
 ---
 
@@ -97,21 +102,24 @@ flowchart TD
 
 Structural techniques record their quality metrics via the existing extensible schema:
 
-1. **Workload Selection:** Standard latency/memory tests continue using [`SyntheticFiller`](https://github.com/khemingkapat/kv_bench/blob/main/src/core/workload.py). A dedicated quality workload (e.g., `PerplexityWorkload` or `NeedleWorkload`) is provided for quality evaluation runs.
+1. **Workload Selection:** Standard latency/memory sweeps use [`SyntheticFiller`](https://github.com/khemingkapat/kv_bench/blob/main/src/core/workload.py) (with `--logprobs 5` for Pillar 1 logit checks). Macro long-context quality sweeps use [`LongMemEvalWorkload`](https://github.com/khemingkapat/kv_bench/blob/main/src/workloads/longmemeval.py) for Pillar 2.
 2. **Result Storage:** Metrics flow into `ResultEntry.extra`:
    ```json
    {
      "requested_ctx": 4096,
      "status": "SUCCESS",
      "axes": ["STRUCTURAL"],
-     "peak_alloc_mb": 3450.0,
-     "throughput_tok_per_sec": 52.4,
+     "peak_alloc_mb": 13592.0,
+     "throughput_tok_per_sec": 83.3,
      "extra": {
-       "ppl_baseline": 8.42,
-       "ppl_compressed": 8.48,
-       "ppl_delta": 0.06,
-       "niah_retrieval_acc": 0.98
+       "top1_agreement": 1.0,
+       "kl_div_mean": 0.0,
+       "kl_div_p99": 0.0,
+       "longmem_acc_overall": 0.32,
+       "longmem_macro_f1": 0.105,
+       "longmem_acc_fact_recall": 0.60,
+       "longmem_acc_information_update": 0.60
      }
    }
    ```
-3. **Cross-Axis Analysis:** Plots can directly correlate memory/latency gains against quality loss (e.g., *VRAM reduction vs. $\Delta \text{PPL}$* Pareto curves).
+3. **Cross-Axis Analysis:** Plots directly correlate memory and latency gains against quality preservation (e.g., *VRAM reduction vs. LongMemEval accuracy* and *TPOT speedup vs. KL divergence* Pareto curves).
