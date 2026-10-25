@@ -1,0 +1,85 @@
+{
+  "manifest_version": "1.0",
+  "generated_at": "2026-10-19T06:53:38Z",
+  "provenance_type": "baseline_run_manifest",
+  "milestone": "WP-2",
+  "work_package": "WP2-4",
+  "target_workload": "Uncompressed BF16 Native vLLM Reference Baseline",
+  "primary_model": {
+    "name": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f",
+    "architecture": "Pure Dense GQA",
+    "params": "4.02B",
+    "layers": 36,
+    "num_kv_heads": 8,
+    "num_q_heads": 32,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+  },
+  "calibration_peer_model": {
+    "name": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc",
+    "architecture": "Pure Dense GQA",
+    "params": "1.7B",
+    "layers": 28,
+    "num_kv_heads": 8,
+    "num_q_heads": 16,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+  },
+  "execution_environment": {
+    "cluster_node": "gpu01.slurm.cpe.kmutt.ac.th",
+    "slurm_job_id": "21970",
+    "gpu_model": "NVIDIA GeForce RTX 4090",
+    "physical_vram_gib": 23.52,
+    "process_allocator_cap_gib": 16.0,
+    "cap_fraction": 0.68,
+    "effective_gpu_utilization": 0.5783,
+    "cuda_version": "13.0",
+    "nvidia_driver": "580.178.04",
+    "vllm_version": "0.30.0",
+    "pytorch_version": "2.13.0+cu130"
+  },
+  "source_repository": {
+    "repo": "khemingkapat/kv_bench",
+    "commit_sha": "20dc56827e35acce38bf6bbbe34d9f244b14bc33",
+    "clean_working_tree": true
+  },
+  "golden_artifacts": {
+    "baseline_hardware_16gb": {
+      "path": "results/baselines/baseline_hardware_16gb.json",
+      "sha256": "220fdf2a5a2aee41dd8fbb832f5de2f62ae54dd20eb3c28c55f80d040c907b8b",
+      "description": "Single-stream context sweep (512 to 32,768 tokens) and OOM cliff records"
+    },
+    "concurrent_baseline_16gb": {
+      "path": "results/baselines/concurrent_baseline_16gb.json",
+      "sha256": "e7e6ee24cbd30b401dba563b43e920c0e85be3c21024e197c164efce63979701",
+      "description": "Multi-user concurrency grid across N in [1, 4, 8, 12, 16] and context up to 8K"
+    },
+    "longmem_baseline_16gb": {
+      "path": "results/baselines/longmem_baseline_16gb.json",
+      "sha256": "668aed961281cee8a01e7d9cbfec98f7f48fa18f9a2478ac0081f7ee68871cb2",
+      "description": "LongMemEval task breakdown (50 prompts across 5 tasks) and batch queueing metrics"
+    },
+    "verify_identity_16gb": {
+      "path": "results/baselines/verify_identity_16gb.json",
+      "sha256": "fd04339f23ce0b8c84294bdf2f4e9e28b56a07e7ddf27905ae2e8194d6a4edd4",
+      "description": "Greedy deterministic self-consistency identity verification"
+    },
+    "verify_cross_model_16gb": {
+      "path": "results/baselines/verify_cross_model_16gb.json",
+      "sha256": "6af89c7c976b4236a16162946f96b5b22ad79954c24b9a6607d6f2818de6c874",
+      "description": "Cross-model KL divergence baseline floor (qwen3-1.7b vs qwen3-4b)"
+    },
+    "baseline_qwen3_4b_ref": {
+      "path": "results/baselines/references/baseline_qwen3-4b_ref.json",
+      "sha256": "ad5670cf138260e39f0668f1fb5be87499bee2bbfb740a79648ff16611fe5827",
+      "description": "Golden reference tokens and top-5 logprobs across 6,392 generation steps"
+    },
+    "verify_ref": {
+      "path": "results/baselines/references/verify_ref.json",
+      "sha256": "5cb25c3b5ab327b1932de7977686ed90f338e60c9e543e5a73ee7183eae3c4bb",
+      "description": "Golden reference tokens for sanity identity check"
+    }
+  }
+}
