@@ -28,7 +28,7 @@ This report consolidates the empirical baseline profiling sweeps conducted acros
    - Conversely, **unshared multi-request KV pool exhaustion and multi-wave queueing** was directly observed in `LongMemEvalWorkload` (50 distinct conversational histories totaling 154,915 prompt tokens at $C=4,096$, or **4.18× the KV pool capacity**), driving P95 TTFT to 9.28s and P95 TPOT to 72.95 ms.
 4. **LongMemEval Quality Ground-Truth & Logit Fidelity Calibration:**
    - Uncompressed BF16 LongMemEval accuracy scaled monotonically with context depth: **10.0% (512) → 22.0% (1,024) → 22.0% (2,048) → 32.0% (4,096)**, led by Fact Recall (30% → 60%) and Information Update (0% → 60%).
-   - Golden reference token IDs and top-5 logprobs across 6,392 generation steps (296,925 prompt tokens) are archived in `results/references/baseline_qwen3-4b_ref.json`.
+   - Golden reference token IDs and top-5 logprobs across 6,392 generation steps (296,925 prompt tokens) are archived in [`results/baselines/references/baseline_qwen3-4b_ref.json`](../results/baselines/references/baseline_qwen3-4b_ref.json).
 
 ---
 
@@ -138,7 +138,7 @@ This report consolidates the empirical baseline profiling sweeps conducted acros
 
 ## 5. Quality Ground-Truth & Logit Fidelity Calibration (WP2-3)
 
-### A. LongMemEval Task Retention & Batch Scheduling Summary (`results/longmem_baseline_16gb.json`)
+### A. LongMemEval Task Retention & Batch Scheduling Summary ([`results/baselines/longmem_baseline_16gb.json`](../results/baselines/longmem_baseline_16gb.json))
 
 | Context ($C$) | Total Prompt Tokens (50 samples) | KV Pool Demand Ratio | Batch Mean / P95 TTFT | Batch Mean / P95 TPOT | Overall Acc | Overall Macro F1 | Fact Recall | Info Update | Relative Timeframe | Cross-Session | Refusal |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -173,7 +173,8 @@ Based on the reconciled baseline data, we establish concrete engineering targets
 ---
 
 ### Artifact Provenance & Replication
-- **Slurm Verification Job:** Job `21970` on `gpu01.slurm.cpe.kmutt.ac.th` (`logs/slurm-21970.log`, `ExitCode=0:0`)
-- **Raw Empirical Benchmarks:** `results/baseline_hardware_16gb.json`, `results/concurrent_baseline_16gb.json`, `results/longmem_baseline_16gb.json`, `results/verify_identity_16gb.json`, `results/verify_cross_model_16gb.json`
-- **Golden Quality Reference:** `results/references/baseline_qwen3-4b_ref.json` (6,392 generation steps, top-5 logprobs)
-- **Reproducible Report Generator:** `uv run python -m src.analysis.report_generator` (or `uv run main.py --report`)
+- **Run Provenance Manifest:** [`results/manifests/run_manifest_baseline_16gb.json`](../results/manifests/run_manifest_baseline_16gb.json) (Slurm Job `21970` on `gpu01.slurm.cpe.kmutt.ac.th`, `ExitCode=0:0`)
+- **Dataset Provenance Manifest:** [`results/manifests/dataset_manifest.json`](../results/manifests/dataset_manifest.json)
+- **Raw Empirical Benchmarks:** [`results/baselines/baseline_hardware_16gb.json`](../results/baselines/baseline_hardware_16gb.json), [`results/baselines/concurrent_baseline_16gb.json`](../results/baselines/concurrent_baseline_16gb.json), [`results/baselines/longmem_baseline_16gb.json`](../results/baselines/longmem_baseline_16gb.json), [`results/baselines/verify_identity_16gb.json`](../results/baselines/verify_identity_16gb.json), [`results/baselines/verify_cross_model_16gb.json`](../results/baselines/verify_cross_model_16gb.json)
+- **Golden Quality Reference:** [`results/baselines/references/baseline_qwen3-4b_ref.json`](../results/baselines/references/baseline_qwen3-4b_ref.json) (6,392 generation steps, top-5 logprobs)
+- **Reproducible Report Generator (`kv_bench`):** `uv run python -m src.analysis.report_generator` (or `uv run main.py --report`)

@@ -30,15 +30,16 @@ Agents operating in this repository act as **Research & Data Repository Managers
   * Use the workspace [`literature-review`](file:///home/khemi/workspace/kv_co-op_hub/.agents/skills/literature-review/SKILL.md) skill (`.agents/skills/literature-review/SKILL.md`) when ingesting research papers across Tier 1 (`foundations/`), Tier 2 (`techniques/`), and Tier 3 (`benchmarks/`).
   * Check [`papers/`](file:///home/khemi/workspace/kv_co-op_hub/papers/) first for local, gitignored PDFs before falling back to arXiv/web and official GitHub repositories.
 * Enforce project scope boundaries:
-  * Strict adherence to consumer hardware budgets (16 GB cluster VRAM cap, 8 GB local VRAM cap).
-  * Unmodified model weights in FP16/BF16 (no weight quantization; focus is strictly on KV-cache management).
-  * Long-context evaluations up to 32K tokens.
-  * Clear categorization of models into **Pure Dense GQA** vs. **Architectural Hybrid / Sliding Window**.
+  * **Hardware Capacity Specification:** Strict adherence to consumer hardware budgets (16 GB cluster VRAM cap on RTX 4090, 8 GB local VRAM cap on RTX 4060).
+  * **Controlled Base Model vs. `STRUCTURAL` KV-Cache Compression:** Base model checkpoints must match the pinned BF16/FP16 versions in [`docs/MODELS.md`](file:///home/khemi/workspace/kv_co-op_hub/docs/MODELS.md) (no arbitrary pre-quantized GGUF/AWQ weights), while KV-cache quantization (FP8, INT4, TurboQuant, HeadQ) and token eviction are evaluated under the `STRUCTURAL` optimization axis.
+  * **Two Primary Quality Pillars:** Production quality evaluation focuses exclusively on (1) **Micro-Level Logit Divergence** (`top1_agreement`, `kl_div_mean`, `kl_div_p99`) and (2) **Macro-Level LongMemEval** (5 core memory capabilities). Perplexity ($\Delta\text{PPL}$) is retained strictly as an optional supplementary diagnostic.
+  * Long-context evaluations up to 32K tokens, categorizing models into **Pure Dense GQA** vs. **Architectural Hybrid / Sliding Window**.
 
 ### C. Data & Result Provenance Management
-* Manage ingestion, tokenization validation, and staging scripts for benchmark datasets (`LongMemEval`, `PG-19`, `WikiText-2`) in `workloads/`.
-* Record dataset integrity (SHA256 checksums, sample counts, prompt structure).
-* Archive golden evaluation summaries and baseline manifests in `results/manifests/` and `results/baselines/`.
+* Manage ingestion, tokenization validation, and staging scripts for benchmark datasets (`LongMemEval`, `PG-19`) in `workloads/`.
+* Record dataset integrity (`results/manifests/dataset_manifest.json`) and run provenance (`results/manifests/run_manifest_*.json` linking Slurm Job ID, hardware specs, `kv_bench` commit SHA, and SHA256 checksums).
+* Archive consolidated golden evaluation summaries in `results/baselines/` and `results/runs/`.
+* **Logprob Bloat Guardrail:** Raw per-step token logprob reference files (`*_ref.json`) are restricted strictly to `results/baselines/references/`. Candidate and experimental sweeps must record only computed summary metrics (`top1_agreement`, `kl_div_mean`, `kl_div_p99`).
 
 ### D. Academic Deliverables
 * Maintain presentation decks, progress reports, and Senior Project thesis documents in `deliverables/`.
@@ -47,14 +48,15 @@ Agents operating in this repository act as **Research & Data Repository Managers
 
 ## 3. Git & Operational Protocol
 
-1. **Commit Directly to `main`:**
-   * Unlike satellite code execution repos, `kv_co-op_hub` houses documentation, manifests, and research notes that do not execute runtime test suites.
-   * Agents may commit documentation and dataset metadata directly to `main` and push to `origin/main`.
+1. **Branch & Pull Request Workflow (No Direct Push to `main`):**
+   * Because `kv_co-op_hub` serves as the central scientific data repository across multiple collaborators, **all changes (human or agent) must go through a feature branch (`data/*`, `docs/*`, `feat/*`, `chore/*`) and a Pull Request targeting `main`**.
+   * Every PR must complete the checklist in [`.github/pull_request_template.md`](file:///home/khemi/workspace/kv_co-op_hub/.github/pull_request_template.md), pass automated CI checks ([`.github/workflows/hub-ci.yml`](file:///home/khemi/workspace/kv_co-op_hub/.github/workflows/hub-ci.yml)), and receive approval from `@khemingkapat` ([`.github/CODEOWNERS`](file:///home/khemi/workspace/kv_co-op_hub/.github/CODEOWNERS)).
 2. **Clear Commit Messages:**
    * Use standard prefixes:
      * `docs:` for documentation, specifications, or meeting notes.
      * `data:` for dataset manifests, preprocessing scripts, or golden results.
-     * `chore:` for project tracking, issue templates, or configuration updates.
-     * Tag relevant Work Packages in commit messages (e.g. `docs(models): add 2026 model taxonomy [WP1-1]`).
-3. **No Heavy Compute:**
+     * `chore:` for project tracking, issue templates, CI workflows, or configuration updates.
+     * Tag relevant Work Packages in commit messages (e.g. `data(baselines): stage WP-2 golden baseline and run manifest [WP-2]`).
+3. **No Heavy Compute or Binary Bloat:**
    * Do not run large vLLM benchmarks, CUDA training, or heavy inference loops in this repository. All execution happens in `kv_bench` or cluster batch jobs.
+   * Never commit binary checkpoints (`.pt`, `.bin`, `.safetensors`, `.gguf`), raw Slurm `.log` files, or files exceeding 10 MB.

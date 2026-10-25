@@ -1,0 +1,115 @@
+name: Hub Integrity & Provenance CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify-hub-integrity:
+    name: Hub Integrity & Linting
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: 1. File Size, Binary & Logprob Bloat Guard
+        run: |
+          python3 - << 'EOF'
+          import subprocess
+          import os
+          import sys
+
+          tracked_files = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
+          forbidden_exts = {".pt", ".pth", ".bin", ".safetensors", ".gguf", ".parquet", ".arrow", ".log"}
+          max_size_bytes = 10 * 1024 * 1024  # 10 MB
+
+          errors = []
+          for fpath in tracked_files:
+              if not os.path.exists(fpath):
+                  continue
+              size = os.path.getsize(fpath)
+              _, ext = os.path.splitext(fpath)
+              ext = ext.lower()
+
+              if size > max_size_bytes:
+                  errors.append(f"File exceeds 10MB limit ({size / (1024*1024):.2f} MB): {fpath}")
+
+              if ext in forbidden_exts:
+                  errors.append(f"Forbidden binary/log extension '{ext}' tracked in Git: {fpath}")
+
+              if ext == ".pdf" and not fpath.startswith("deliverables/"):
+                  errors.append(f"Tracked PDF outside 'deliverables/' directory (keep papers in gitignored papers/): {fpath}")
+
+              if fpath.endswith("_ref.json") and not fpath.startswith("results/baselines/references/"):
+                  errors.append(
+                      f"Raw per-step logprob reference file outside 'results/baselines/references/': {fpath}. "
+                      "Experimental sweeps must only record summary metrics (top1_agreement, kl_div_mean, kl_div_p99)."
+                  )
+
+          if errors:
+              for e in errors:
+                  print(f"❌ {e}", file=sys.stderr)
+              sys.exit(1)
+          print(f"✅ Checked {len(tracked_files)} tracked files: zero binary/size/bloat violations.")
+          EOF
+
+      - name: 2. JSON Syntax & Manifest SHA256 Provenance Verification
+        run: |
+          python3 - << 'EOF'
+          import subprocess
+          import json
+          import hashlib
+          import os
+          import sys
+
+          tracked_files = subprocess.check_output(["git", "ls-files"], text=True).splitlines()
+          json_files = [f for f in tracked_files if f.endswith(".json") and os.path.exists(f)]
+
+          errors = []
+          for jf in json_files:
+              try:
+                  with open(jf, "r", encoding="utf-8") as f:
+                      data = json.load(f)
+              except Exception as exc:
+                  errors.append(f"Invalid JSON syntax in {jf}: {exc}")
+                  continue
+
+              # Verify run manifests against actual staged files and SHA256 hashes
+              if jf.startswith("results/manifests/run_manifest_"):
+                  artifacts = data.get("golden_artifacts", {})
+                  if not artifacts:
+                      errors.append(f"Run manifest {jf} is missing 'golden_artifacts' entries.")
+                  for key, meta in artifacts.items():
+                      rel_path = meta.get("path", "")
+                      expected_sha = meta.get("sha256", "")
+                      if not os.path.exists(rel_path):
+                          errors.append(f"Manifest {jf} references missing file: {rel_path}")
+                          continue
+                      with open(rel_path, "rb") as af:
+                          actual_sha = hashlib.sha256(af.read()).hexdigest()
+                      if actual_sha != expected_sha:
+                          errors.append(
+                              f"SHA256 mismatch for {rel_path} in {jf}: expected {expected_sha}, got {actual_sha}"
+                          )
+
+          if errors:
+              for e in errors:
+                  print(f"❌ {e}", file=sys.stderr)
+              sys.exit(1)
+          print(f"✅ Validated {len(json_files)} JSON files and verified all run manifest SHA256 checksums.")
+          EOF
+
+      - name: 3. Python Script Syntax & Ruff Linting
+        run: |
+          pip install --quiet ruff
+          python3 -m py_compile workloads/download_datasets.py
+          ruff check workloads/
