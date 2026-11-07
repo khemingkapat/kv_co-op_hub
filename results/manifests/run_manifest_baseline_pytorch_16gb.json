@@ -1,0 +1,57 @@
+{
+  "manifest_version": "1.0",
+  "generated_at": "2026-11-07T03:38:00Z",
+  "provenance_type": "baseline_run_manifest",
+  "milestone": "WP-1",
+  "work_package": "WP1-4-1",
+  "target_workload": "Uncompressed BF16 Native PyTorch Reference Baseline (SDPA, Exact Unity Retention & LongMemEval Ground-Truth)",
+  "primary_model": {
+    "name": "Qwen/Qwen3-4B-Instruct-2507",
+    "revision": "cdbee75f17c01a7cc42f958dc650907174af0554",
+    "architecture": "Pure Dense GQA",
+    "params": "4.02B",
+    "layers": 36,
+    "num_kv_heads": 8,
+    "num_q_heads": 32,
+    "head_dim": 128,
+    "dtype": "bfloat16"
+  },
+  "execution_environment": {
+    "cluster_node": "gpu06.slurm.cpe.kmutt.ac.th",
+    "slurm_job_id": "24643",
+    "gpu_model": "NVIDIA GeForce RTX 4090",
+    "physical_vram_gib": 23.52,
+    "process_allocator_cap_gib": 16.0,
+    "cap_fraction": 0.68,
+    "effective_gpu_utilization": 0.5783,
+    "cuda_version": "12.2",
+    "pytorch_version": "2.6.0"
+  },
+  "source_repository": {
+    "repo": "khemingkapat/kv_bench",
+    "commit_sha": "f0649c04901fdb7aa3bfdae00ce7b1e4c735d482",
+    "clean_working_tree": true
+  },
+  "golden_artifacts": {
+    "longmem_baseline_pytorch_16gb": {
+      "path": "results/baselines/longmem_baseline_pytorch_16gb.json",
+      "sha256": "66a5c6f56b44fd4dd26db7528b2abe2610cee4cd67a30e1a51a01842cc9bb111",
+      "description": "Native PyTorch uncompressed baseline LongMemEval runs across context lengths 512 to 16,384 tokens with select-by-length"
+    },
+    "verify_baseline_pytorch_16gb": {
+      "path": "results/baselines/verify_baseline_pytorch_16gb.json",
+      "sha256": "c2893eabc022d14bfd4addeed7abfa4b32fc890f3b60c371b621df16f3f50dda",
+      "description": "Native PyTorch uncompressed baseline verification run (128 ctx, 16 tokens)"
+    },
+    "baseline_qwen3_4b_pytorch_ref": {
+      "path": "results/baselines/references/baseline_qwen3-4b_pytorch_ref.json",
+      "sha256": "cd21c03896d1efb8848d73b2d4bea0d85e21ca27b40ad20cc001a0c804f7067a",
+      "description": "Golden ground-truth sample correctness, predictions, and step logprobs for PyTorch causal attribution"
+    },
+    "verify_ref_pytorch": {
+      "path": "results/baselines/references/verify_ref_pytorch.json",
+      "sha256": "126f0e15ec8d8b6c192b1aaf903aada6f13420e7095e5f56e0b49ad6b46e7938",
+      "description": "Golden reference tokens and step logprobs for PyTorch verification sanity checks"
+    }
+  }
+}
