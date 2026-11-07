@@ -1,0 +1,35 @@
+{
+  "model": "qwen3-4b",
+  "technique": "baseline",
+  "axes": [],
+  "results": [
+    {
+      "requested_ctx": 128,
+      "status": "SUCCESS",
+      "axes": [],
+      "prompt_tokens": 128,
+      "generated_tokens": 16,
+      "ttft_sec": 3.1605,
+      "decode_time_sec": 0.5853,
+      "total_time_sec": 3.7458,
+      "throughput_tok_per_sec": 25.63,
+      "tpot_mean_ms": 39.02,
+      "tpot_p95_ms": 39.02,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 3.1605,
+      "peak_alloc_mb": 7738.78,
+      "peak_reserved_mb": 7748.0,
+      "host_rss_delta_mb": 1056.32,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "engine": "pytorch",
+        "attn_implementation": "sdpa",
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52
+      }
+    }
+  ]
+}
