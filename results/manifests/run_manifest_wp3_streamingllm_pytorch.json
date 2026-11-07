@@ -1,6 +1,6 @@
 {
   "manifest_version": "1.0",
-  "generated_at": "2026-11-02T15:24:00Z",
+  "generated_at": "2026-11-07T03:38:00Z",
   "provenance_type": "technique_run_manifest",
   "milestone": "WP-3",
   "work_package": "WP3-1-3",
@@ -29,8 +29,9 @@
     "dtype": "bfloat16"
   },
   "execution_environment": {
-    "cluster_node": "gpu01.slurm.cpe.kmutt.ac.th",
-    "slurm_job_id": "23938",
+    "cluster_node": "gpu06.slurm.cpe.kmutt.ac.th",
+    "slurm_job_id": "24643",
+    "hardware_sweep_job_id": "23938",
     "gpu_model": "NVIDIA GeForce RTX 4090",
     "physical_vram_gib": 23.52,
     "process_allocator_cap_gib": 16.0,
@@ -41,8 +42,8 @@
   },
   "source_repository": {
     "repo": "khemingkapat/kv_bench",
-    "commit_sha": "e651fa6db0868cab2ef1474e6319afde60de8fe7",
-    "branch": "feat/wp3-1-3-unified-pytorch-migration",
+    "commit_sha": "f0649c04901fdb7aa3bfdae00ce7b1e4c735d482",
+    "branch": "main",
     "clean_working_tree": true
   },
   "golden_artifacts": {
@@ -53,12 +54,17 @@
     },
     "streamingllm_longmem_pytorch_16gb": {
       "path": "results/runs/wp3/streamingllm_longmem_pytorch_16gb.json",
-      "sha256": "d46c664a791f8ec83bef27bcecbe07e9239774cee3b434853dcaba95e4e18097",
-      "description": "Macro LongMemEval quality evaluation across contexts [512, 1024, 2048, 4096] under unified PyTorch runner"
+      "sha256": "99913a2f5b17272f196ef9f2547d07cd2ce3672f0c79e44f6e59cf0a8e9fdc7d",
+      "description": "Macro LongMemEval quality evaluation across contexts [512, 1024, 2048, 4096, 8192, 16384] with standardized diagnostic telemetry"
+    },
+    "streamingllm_niah_pytorch_16gb": {
+      "path": "results/runs/wp3/streamingllm_niah_pytorch_16gb.json",
+      "sha256": "ca05f1760ee3dd639278cec186d69d04dd9523d5d394f775b89b8a9024d311b1",
+      "description": "Needle-in-a-Haystack synthetic stress test with standardized diagnostic telemetry across context scaling"
     },
     "verify_streamingllm_pytorch_16gb": {
       "path": "results/runs/wp3/verify_streamingllm_pytorch_16gb.json",
-      "sha256": "390e611a6e0ee407dfd6145c5b3fd65cfe3654e448bd2077cd4b0241be8d187c",
+      "sha256": "ed68cec1f5f3e069d11ad3f2b61bdc63776b0f730ce09844f6af471e49a9072c",
       "description": "Verification run checking zero divergence against PyTorch baseline reference (100% Top-1 match)"
     }
   }
