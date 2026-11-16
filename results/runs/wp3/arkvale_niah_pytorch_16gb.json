@@ -1,0 +1,246 @@
+{
+  "model": "qwen3-4b",
+  "technique": "arkvale",
+  "axes": [
+    "STRUCTURAL",
+    "SPATIAL"
+  ],
+  "results": [
+    {
+      "requested_ctx": 2048,
+      "status": "SUCCESS",
+      "axes": [
+        "STRUCTURAL",
+        "SPATIAL"
+      ],
+      "prompt_tokens": 20480,
+      "generated_tokens": 160,
+      "ttft_sec": 0.4848,
+      "decode_time_sec": 0.7404,
+      "total_time_sec": 11.4448,
+      "throughput_tok_per_sec": 214.75,
+      "tpot_mean_ms": 42.55,
+      "tpot_p95_ms": 49.26,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 0.6018,
+      "peak_alloc_mb": 8633.02,
+      "peak_reserved_mb": 8742.0,
+      "host_rss_delta_mb": 4604.51,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "page_size": 16,
+        "active_pages_budget": 16,
+        "exempt_early_layers": 2,
+        "compression_ratio_vs_bf16": 4.5,
+        "block_size": 16,
+        "pcie_transfer_bytes": 387760128,
+        "recalled_pages": 1275,
+        "aabb_digests_active": true,
+        "page_recall_supported": true,
+        "engine": "pytorch",
+        "attn_implementation": "sdpa",
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52,
+        "niah_accuracy": 1.0,
+        "niah_passcode": "849204",
+        "niah_depths": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9
+        ],
+        "niah_grid": [
+          {
+            "depth": 0.0,
+            "needle_distance": 2048,
+            "retrieved": 1.0,
+            "generated_text": "849204. This information is explicitly stated in the text"
+          },
+          {
+            "depth": 0.1,
+            "needle_distance": 1847,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          },
+          {
+            "depth": 0.2,
+            "needle_distance": 1646,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is directly stated in the text"
+          },
+          {
+            "depth": 0.3,
+            "needle_distance": 1445,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          },
+          {
+            "depth": 0.4,
+            "needle_distance": 1244,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          },
+          {
+            "depth": 0.5,
+            "needle_distance": 1043,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is directly stated in the text"
+          },
+          {
+            "depth": 0.6,
+            "needle_distance": 842,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          },
+          {
+            "depth": 0.7,
+            "needle_distance": 641,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. However, it's worth noting that"
+          },
+          {
+            "depth": 0.8,
+            "needle_distance": 440,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          },
+          {
+            "depth": 0.9,
+            "needle_distance": 239,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          }
+        ],
+        "niah_retrieved_count": 10,
+        "niah_total_depths": 10
+      }
+    },
+    {
+      "requested_ctx": 4096,
+      "status": "SUCCESS",
+      "axes": [
+        "STRUCTURAL",
+        "SPATIAL"
+      ],
+      "prompt_tokens": 40959,
+      "generated_tokens": 160,
+      "ttft_sec": 1.0458,
+      "decode_time_sec": 0.9189,
+      "total_time_sec": 18.129,
+      "throughput_tok_per_sec": 173.03,
+      "tpot_mean_ms": 49.55,
+      "tpot_p95_ms": 60.76,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 1.2081,
+      "peak_alloc_mb": 8830.62,
+      "peak_reserved_mb": 8938.0,
+      "host_rss_delta_mb": 8000.22,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "page_size": 16,
+        "active_pages_budget": 16,
+        "exempt_early_layers": 2,
+        "compression_ratio_vs_bf16": 4.5,
+        "block_size": 16,
+        "pcie_transfer_bytes": 701677568,
+        "recalled_pages": 1457,
+        "aabb_digests_active": true,
+        "page_recall_supported": true,
+        "engine": "pytorch",
+        "attn_implementation": "sdpa",
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52,
+        "niah_accuracy": 1.0,
+        "niah_passcode": "849204",
+        "niah_depths": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9
+        ],
+        "niah_grid": [
+          {
+            "depth": 0.0,
+            "needle_distance": 4096,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          },
+          {
+            "depth": 0.1,
+            "needle_distance": 3690,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is directly stated in the text"
+          },
+          {
+            "depth": 0.2,
+            "needle_distance": 3284,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This code is mentioned in the text"
+          },
+          {
+            "depth": 0.3,
+            "needle_distance": 2879,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          },
+          {
+            "depth": 0.4,
+            "needle_distance": 2473,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is directly stated in the text"
+          },
+          {
+            "depth": 0.5,
+            "needle_distance": 2067,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. \n\n(Note: The text mentions \""
+          },
+          {
+            "depth": 0.6,
+            "needle_distance": 1661,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is directly stated in the text"
+          },
+          {
+            "depth": 0.7,
+            "needle_distance": 1255,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          },
+          {
+            "depth": 0.8,
+            "needle_distance": 850,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This code is mentioned in the text"
+          },
+          {
+            "depth": 0.9,
+            "needle_distance": 444,
+            "retrieved": 1.0,
+            "generated_text": "**849204**. This is explicitly stated in the text"
+          }
+        ],
+        "niah_retrieved_count": 10,
+        "niah_total_depths": 10
+      }
+    }
+  ]
+}

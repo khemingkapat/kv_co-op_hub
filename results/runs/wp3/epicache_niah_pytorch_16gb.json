@@ -1,0 +1,244 @@
+{
+  "model": "qwen3-4b",
+  "technique": "epicache",
+  "axes": [
+    "STRUCTURAL",
+    "SPATIAL"
+  ],
+  "results": [
+    {
+      "requested_ctx": 2048,
+      "status": "SUCCESS",
+      "axes": [
+        "STRUCTURAL",
+        "SPATIAL"
+      ],
+      "prompt_tokens": 20480,
+      "generated_tokens": 160,
+      "ttft_sec": 0.1773,
+      "decode_time_sec": 0.4229,
+      "total_time_sec": 5.8583,
+      "throughput_tok_per_sec": 375.98,
+      "tpot_mean_ms": 25.73,
+      "tpot_p95_ms": 27.0,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 0.2754,
+      "peak_alloc_mb": 9287.81,
+      "peak_reserved_mb": 9344.0,
+      "host_rss_delta_mb": 1168.48,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "num_episodes": 4,
+        "episode_budget_tokens": 1024,
+        "layer_sensitivity_alpha": 2.0,
+        "compression_ratio_vs_bf16": 3.8,
+        "block_size": 16,
+        "active_retained_tokens": 1024,
+        "block_wise_prefill_active": true,
+        "episodic_routing_active": true,
+        "engine": "pytorch",
+        "attn_implementation": "sdpa",
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52,
+        "niah_accuracy": 0.0,
+        "niah_passcode": "849204",
+        "niah_depths": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9
+        ],
+        "niah_grid": [
+          {
+            "depth": 0.0,
+            "needle_distance": 2048,
+            "retrieved": 0.0,
+            "generated_text": "3 for the the project is a the project. a the early days of"
+          },
+          {
+            "depth": 0.1,
+            "needle_distance": 1847,
+            "retrieved": 0.0,
+            "generated_text": "****4232 for **for the the for the for the for"
+          },
+          {
+            "depth": 0.2,
+            "needle_distance": 1646,
+            "retrieved": 0.0,
+            "generated_text": "****12342300000000"
+          },
+          {
+            "depth": 0.3,
+            "needle_distance": 1445,
+            "retrieved": 0.0,
+            "generated_text": "**4832 is 400000000"
+          },
+          {
+            "depth": 0.4,
+            "needle_distance": 1244,
+            "retrieved": 0.0,
+            "generated_text": "**4 forhehehe for the is **projectededed in the"
+          },
+          {
+            "depth": 0.5,
+            "needle_distance": 1043,
+            "retrieved": 0.0,
+            "generated_text": "****\"42000 for1867 is 1"
+          },
+          {
+            "depth": 0.6,
+            "needle_distance": 842,
+            "retrieved": 0.0,
+            "generated_text": "****in the project is ** is the for the for the project was is"
+          },
+          {
+            "depth": 0.7,
+            "needle_distance": 641,
+            "retrieved": 0.0,
+            "generated_text": "****projecteded for the for the for the for the project for is"
+          },
+          {
+            "depth": 0.8,
+            "needle_distance": 440,
+            "retrieved": 0.0,
+            "generated_text": "**4 for project Alpha is 4 is 1859 is"
+          },
+          {
+            "depth": 0.9,
+            "needle_distance": 239,
+            "retrieved": 0.0,
+            "generated_text": "**4 for project is 186 is 1859 is"
+          }
+        ],
+        "niah_retrieved_count": 0,
+        "niah_total_depths": 10
+      }
+    },
+    {
+      "requested_ctx": 4096,
+      "status": "SUCCESS",
+      "axes": [
+        "STRUCTURAL",
+        "SPATIAL"
+      ],
+      "prompt_tokens": 40959,
+      "generated_tokens": 160,
+      "ttft_sec": 0.3563,
+      "decode_time_sec": 0.4335,
+      "total_time_sec": 7.7868,
+      "throughput_tok_per_sec": 366.78,
+      "tpot_mean_ms": 26.15,
+      "tpot_p95_ms": 28.36,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 0.4544,
+      "peak_alloc_mb": 9431.84,
+      "peak_reserved_mb": 9784.0,
+      "host_rss_delta_mb": 1172.82,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "num_episodes": 4,
+        "episode_budget_tokens": 1024,
+        "layer_sensitivity_alpha": 2.0,
+        "compression_ratio_vs_bf16": 3.8,
+        "block_size": 16,
+        "active_retained_tokens": 1024,
+        "block_wise_prefill_active": true,
+        "episodic_routing_active": true,
+        "engine": "pytorch",
+        "attn_implementation": "sdpa",
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52,
+        "niah_accuracy": 0.0,
+        "niah_passcode": "849204",
+        "niah_depths": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9
+        ],
+        "niah_grid": [
+          {
+            "depth": 0.0,
+            "needle_distance": 4096,
+            "retrieved": 0.0,
+            "generated_text": "not,, and, for the of the, the a a, a,"
+          },
+          {
+            "depth": 0.1,
+            "needle_distance": 3690,
+            "retrieved": 0.0,
+            "generated_text": "not for, for for for to for of the of the of the to get"
+          },
+          {
+            "depth": 0.2,
+            "needle_distance": 3284,
+            "retrieved": 0.0,
+            "generated_text": "not for,. for for the for of the of the of the is the"
+          },
+          {
+            "depth": 0.3,
+            "needle_distance": 2879,
+            "retrieved": 0.0,
+            "generated_text": "not for, and for for for the for of the of the was, was"
+          },
+          {
+            "depth": 0.4,
+            "needle_distance": 2473,
+            "retrieved": 0.0,
+            "generated_text": "not, and and is not the,,,,, the was not is"
+          },
+          {
+            "depth": 0.5,
+            "needle_distance": 2067,
+            "retrieved": 0.0,
+            "generated_text": "not for,, for for for for of the for for for for was,"
+          },
+          {
+            "depth": 0.6,
+            "needle_distance": 1661,
+            "retrieved": 0.0,
+            "generated_text": "not for. for for for for for of the the for the for the for"
+          },
+          {
+            "depth": 0.7,
+            "needle_distance": 1255,
+            "retrieved": 0.0,
+            "generated_text": "not for,, for for for for of the, for, verification of of"
+          },
+          {
+            "depth": 0.8,
+            "needle_distance": 850,
+            "retrieved": 0.0,
+            "generated_text": "** 1 for for for for for for the for in the, for the"
+          },
+          {
+            "depth": 0.9,
+            "needle_distance": 444,
+            "retrieved": 0.0,
+            "generated_text": "** 1 the for the the of the, 1 the started in the"
+          }
+        ],
+        "niah_retrieved_count": 0,
+        "niah_total_depths": 10
+      }
+    }
+  ]
+}

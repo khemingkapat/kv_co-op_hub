@@ -1,0 +1,48 @@
+{
+  "model": "qwen3-4b",
+  "technique": "qserve_kv4",
+  "axes": [
+    "STRUCTURAL"
+  ],
+  "results": [
+    {
+      "requested_ctx": 128,
+      "status": "SUCCESS",
+      "axes": [
+        "STRUCTURAL"
+      ],
+      "prompt_tokens": 128,
+      "generated_tokens": 16,
+      "ttft_sec": 2.6624,
+      "decode_time_sec": 0.6355,
+      "total_time_sec": 3.2979,
+      "throughput_tok_per_sec": 23.6,
+      "tpot_mean_ms": 42.37,
+      "tpot_p95_ms": 42.37,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 2.6624,
+      "peak_alloc_mb": 7759.8,
+      "peak_reserved_mb": 7768.0,
+      "host_rss_delta_mb": 1141.41,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "kv_cache_bits": 4,
+        "quant_group_size": 32,
+        "smooth_attention_alpha": 0.5,
+        "compression_ratio_vs_bf16": 4.0,
+        "block_size": 16,
+        "quantized_cache_bytes": 5930496,
+        "engine": "pytorch",
+        "attn_implementation": "sdpa",
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52,
+        "top1_agreement": 0.0,
+        "kl_div_mean": 12.56021,
+        "kl_div_p99": 15.3301
+      }
+    }
+  ]
+}

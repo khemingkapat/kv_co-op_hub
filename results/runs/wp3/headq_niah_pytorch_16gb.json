@@ -1,0 +1,243 @@
+{
+  "model": "qwen3-4b",
+  "technique": "headq",
+  "axes": [
+    "STRUCTURAL"
+  ],
+  "results": [
+    {
+      "requested_ctx": 2048,
+      "status": "SUCCESS",
+      "axes": [
+        "STRUCTURAL"
+      ],
+      "prompt_tokens": 20480,
+      "generated_tokens": 160,
+      "ttft_sec": 0.3058,
+      "decode_time_sec": 0.6448,
+      "total_time_sec": 9.2276,
+      "throughput_tok_per_sec": 246.59,
+      "tpot_mean_ms": 39.75,
+      "tpot_p95_ms": 41.51,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 0.4346,
+      "peak_alloc_mb": 8923.52,
+      "peak_reserved_mb": 8952.0,
+      "host_rss_delta_mb": 1256.15,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "key_bits": 2,
+        "val_bits": 4,
+        "pca_rank": 4,
+        "sidecode_bits": 4,
+        "effective_key_bits": 2.125,
+        "compression_ratio_vs_bf16": 5.22,
+        "block_size": 16,
+        "model_visible_distortion_aware": true,
+        "quantized_cache_bytes": 61827840,
+        "engine": "pytorch",
+        "attn_implementation": "sdpa",
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52,
+        "niah_accuracy": 0.0,
+        "niah_passcode": "849204",
+        "niah_depths": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9
+        ],
+        "niah_grid": [
+          {
+            "depth": 0.0,
+            "needle_distance": 2048,
+            "retrieved": 0.0,
+            "generated_text": "0000000000000000"
+          },
+          {
+            "depth": 0.1,
+            "needle_distance": 1847,
+            "retrieved": 0.0,
+            "generated_text": "e e about the e e e e e e e e about the e e"
+          },
+          {
+            "depth": 0.2,
+            "needle_distance": 1646,
+            "retrieved": 0.0,
+            "generated_text": "e e e e e e e e e e e e e e e e"
+          },
+          {
+            "depth": 0.3,
+            "needle_distance": 1445,
+            "retrieved": 0.0,
+            "generated_text": "about about about about about about about about about about about about about about about about"
+          },
+          {
+            "depth": 0.4,
+            "needle_distance": 1244,
+            "retrieved": 0.0,
+            "generated_text": "o o o o o o o o o o o o o o o o"
+          },
+          {
+            "depth": 0.5,
+            "needle_distance": 1043,
+            "retrieved": 0.0,
+            "generated_text": "e e<neol<ne<00000000"
+          },
+          {
+            "depth": 0.6,
+            "needle_distance": 842,
+            "retrieved": 0.0,
+            "generated_text": "about the about the about the about the about the about the about the about the"
+          },
+          {
+            "depth": 0.7,
+            "needle_distance": 641,
+            "retrieved": 0.0,
+            "generated_text": "about thene of thene of thene of thene of thene of"
+          },
+          {
+            "depth": 0.8,
+            "needle_distance": 440,
+            "retrieved": 0.0,
+            "generated_text": "about the about the about thene about the about the about the about the about"
+          },
+          {
+            "depth": 0.9,
+            "needle_distance": 239,
+            "retrieved": 0.0,
+            "generated_text": "e e of thene of thene of thene of the e e e"
+          }
+        ],
+        "niah_retrieved_count": 0,
+        "niah_total_depths": 10
+      }
+    },
+    {
+      "requested_ctx": 4096,
+      "status": "SUCCESS",
+      "axes": [
+        "STRUCTURAL"
+      ],
+      "prompt_tokens": 40959,
+      "generated_tokens": 160,
+      "ttft_sec": 0.5103,
+      "decode_time_sec": 0.6582,
+      "total_time_sec": 11.3524,
+      "throughput_tok_per_sec": 241.57,
+      "tpot_mean_ms": 39.85,
+      "tpot_p95_ms": 42.04,
+      "cold_ttft_sec": 0.0,
+      "cold_total_sec": 0.0,
+      "ttft_p95_sec": 0.6249,
+      "peak_alloc_mb": 9567.05,
+      "peak_reserved_mb": 9958.0,
+      "host_rss_delta_mb": 1258.79,
+      "memcpy_bytes_per_token": 0.0,
+      "error": null,
+      "extra": {
+        "key_bits": 2,
+        "val_bits": 4,
+        "pca_rank": 4,
+        "sidecode_bits": 4,
+        "effective_key_bits": 2.125,
+        "compression_ratio_vs_bf16": 5.22,
+        "block_size": 16,
+        "model_visible_distortion_aware": true,
+        "quantized_cache_bytes": 123169536,
+        "engine": "pytorch",
+        "attn_implementation": "sdpa",
+        "max_vram_gb": 16.0,
+        "effective_gpu_utilization": 0.5783,
+        "hardware_vram_gb": 23.52,
+        "niah_accuracy": 0.0,
+        "niah_passcode": "849204",
+        "niah_depths": [
+          0.0,
+          0.1,
+          0.2,
+          0.3,
+          0.4,
+          0.5,
+          0.6,
+          0.7,
+          0.8,
+          0.9
+        ],
+        "niah_grid": [
+          {
+            "depth": 0.0,
+            "needle_distance": 4096,
+            "retrieved": 0.0,
+            "generated_text": "of the of the99 of the90 of the9000"
+          },
+          {
+            "depth": 0.1,
+            "needle_distance": 3690,
+            "retrieved": 0.0,
+            "generated_text": "the< the< the< the< the< the< the< the<"
+          },
+          {
+            "depth": 0.2,
+            "needle_distance": 3284,
+            "retrieved": 0.0,
+            "generated_text": "the e e e the o e the o e e the o the o e"
+          },
+          {
+            "depth": 0.3,
+            "needle_distance": 2879,
+            "retrieved": 0.0,
+            "generated_text": "about the about the about the e of the of the of the of the of"
+          },
+          {
+            "depth": 0.4,
+            "needle_distance": 2473,
+            "retrieved": 0.0,
+            "generated_text": "of the of the of the of the of the of the of the of the"
+          },
+          {
+            "depth": 0.5,
+            "needle_distance": 2067,
+            "retrieved": 0.0,
+            "generated_text": "about the about the about the about the about the about the about the about the"
+          },
+          {
+            "depth": 0.6,
+            "needle_distance": 1661,
+            "retrieved": 0.0,
+            "generated_text": "about the about the the the the about the the the the the the about the"
+          },
+          {
+            "depth": 0.7,
+            "needle_distance": 1255,
+            "retrieved": 0.0,
+            "generated_text": "about about the about the o of the of the of the of the of the"
+          },
+          {
+            "depth": 0.8,
+            "needle_distance": 850,
+            "retrieved": 0.0,
+            "generated_text": "about the e of the e of the e of the of the of the about"
+          },
+          {
+            "depth": 0.9,
+            "needle_distance": 444,
+            "retrieved": 0.0,
+            "generated_text": "about the e of the e of the about the e of the of the of"
+          }
+        ],
+        "niah_retrieved_count": 0,
+        "niah_total_depths": 10
+      }
+    }
+  ]
+}
